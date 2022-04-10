@@ -8,7 +8,7 @@ import {Menu} from '@material-ui/icons';
 
 export type filterType = 'all' | 'active' | 'completed'
 
-type todolistType = {
+export type todolistType = {
     id: string
     title: string
     filter: filterType
@@ -73,7 +73,7 @@ export const App = () => {
     }
 
     const removeTodolist = (todolistId: string) => {
-        setTodolists(todolists.filter(t => t.id !== todolistId))
+        setTodolists(todolists.filter(tl => tl.id !== todolistId))
         delete tasksObj[todolistId]
         setTasksObj({...tasksObj})
     }
