@@ -1,32 +1,32 @@
 import React, {ChangeEvent} from 'react';
 import './App.css';
-import {filterType} from './App';
+import {FilterType} from './App';
 import {Form} from './common/Form';
 import {EditableSpan} from './common/EditableSpan';
 import {Button, Checkbox, IconButton} from '@material-ui/core';
 import {Delete} from '@material-ui/icons';
 
-type todolistType = {
+type TodolistType = {
     id: string
     title: string
-    tasks: taskType[]
-    filter: filterType
+    tasks: TaskType[]
+    filter: FilterType
     addTask: (title: string, todolistId: string) => void
     removeTask: (id: string, todolistId: string) => void
-    changeFilter: (filter: filterType, todolistId: string) => void
+    changeFilter: (filter: FilterType, todolistId: string) => void
     changeTaskStatus: (taskId: string, isDone: boolean, todolistId: string) => void
     removeTodolist: (todolistId: string) => void
     changeTaskTitle: (taskId: string, todolistId: string, newTitle: string) => void
     changeTodolistTitle: (todolistId: string, newTitle: string) => void
 }
 
-export type taskType = {
+export type TaskType = {
     id: string
     isDone: boolean
     title: string
 }
 
-export const Todolist = (props: todolistType) => {
+export const Todolist = (props: TodolistType) => {
 
     const removeTodolist = () => props.removeTodolist(props.id)
     const addTask = (title: string) => props.addTask(title, props.id)
