@@ -1,41 +1,42 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent, KeyboardEvent, useCallback, useState} from 'react';
 import '../App.css';
 import {IconButton, TextField} from '@material-ui/core';
-import {ControlPoint} from '@material-ui/icons';
+import AddBoxIcon from '@material-ui/icons/AddBox';
 
 type FormType = {
     addItem: (title: string) => void
 }
 
-export const Form = (props: FormType) => {
+export const AddItemForm = React.memo((props: FormType) => {
 
     const [title, setTitle] = useState('')
     const [error, setError] = useState<string | null>(null)
 
-    const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
-
-    const addTask = () => {
+    const addTask = useCallback(() => {
         if (title.trim() !== '') {
             props.addItem(title.trim())
             setTitle('')
         } else {
             setError('Title is required!')
-            // props.addItem('New list')
         }
-    }
+    }, [props, title])
 
-    const onKeyPressAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null)
+    const onChangeTitle = useCallback((e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value), [setTitle])
+
+    const onKeyPressAddTask = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
+        if (error !== null) {
+            setError(null)
+        }
         if (e.key === 'Enter') {
             addTask()
         }
-    }
+    }, [addTask, error])
 
     return (
         <div>
             <TextField
                 variant={'outlined'}
-                label={'Type value'}
+                label={'Title'}
                 value={title}
                 onChange={onChangeTitle}
                 onKeyPress={onKeyPressAddTask}
@@ -43,8 +44,8 @@ export const Form = (props: FormType) => {
                 helperText={error}
             />
             <IconButton color="primary" onClick={addTask}>
-                <ControlPoint />
+                <AddBoxIcon/>
             </IconButton>
         </div>
     )
-}
+})

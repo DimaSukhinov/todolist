@@ -1,8 +1,17 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {TaskType, Todolist} from './Todolist';
-import {Form} from './common/Form';
-import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from '@material-ui/core';
+import {AddItemForm} from './common/AddItemForm';
+import {
+    AppBar,
+    Button,
+    Container,
+    Grid,
+    IconButton,
+    Paper,
+    Toolbar,
+    Typography
+} from '@material-ui/core';
 import {Menu} from '@material-ui/icons';
 import {
     addTodolistAC,
@@ -25,35 +34,35 @@ export type TasksStateType = {
     [key: string]: TaskType[]
 }
 
-export const AppWithRedux = () => {
+export const App = () => {
 
     const dispatch = useDispatch()
-    const todolists = useSelector<AppRootStateType, TodolistType[]>(state  => state.todolists)
+    const todolists = useSelector<AppRootStateType, TodolistType[]>(state => state.todolists)
 
-    const addTodolist = (title: string) => dispatch(addTodolistAC(title))
+    const addTodolist = useCallback((title: string) => dispatch(addTodolistAC(title)), [dispatch])
 
-    const removeTodolist = (todolistId: string) => dispatch(removeTodolistAC(todolistId))
+    const removeTodolist = useCallback((todolistId: string) => dispatch(removeTodolistAC(todolistId)), [dispatch])
 
-    const changeTodolistTitle = (todolistId: string, newTitle: string) => dispatch(changeTodolistTitleAC(todolistId, newTitle))
+    const changeTodolistTitle = useCallback((todolistId: string, newTitle: string) => dispatch(changeTodolistTitleAC(todolistId, newTitle)), [dispatch])
 
-    const changeFilter = (filter: FilterType, todolistId: string) => dispatch(changeTodolistFilterAC(filter, todolistId))
+    const changeFilter = useCallback((filter: FilterType, todolistId: string) => dispatch(changeTodolistFilterAC(filter, todolistId)), [dispatch])
 
     return (
         <div className="App">
             <AppBar position="static">
-                <Toolbar>
+                <Toolbar style={{justifyContent: 'space-between'}}>
                     <IconButton edge="start" color="inherit" aria-label="menu">
                         <Menu/>
                     </IconButton>
                     <Typography variant="h6">
                         Todolist
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Button color="inherit" variant={'outlined'}>Login</Button>
                 </Toolbar>
             </AppBar>
             <Container fixed>
                 <Grid style={{padding: '20px'}} container>
-                    <Form addItem={addTodolist}/>
+                    <AddItemForm addItem={addTodolist}/>
                 </Grid>
                 <Grid spacing={3} container>
                     {
