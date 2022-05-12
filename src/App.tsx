@@ -66,7 +66,7 @@ export const App = () => {
                 </Grid>
                 <Grid spacing={3} container>
                     {
-                        todolists.map((tl) => {
+                        todolists.map(tl => {
                             return (
                                 <Grid item>
                                     <Paper style={{padding: '10px'}}>
