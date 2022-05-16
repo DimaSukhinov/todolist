@@ -14,7 +14,7 @@ import {Menu} from '@mui/icons-material'
 import {
     addTodolistAC,
     changeTodolistFilterAC,
-    changeTodolistTitleAC,
+    changeTodolistTitleAC, fetchTodosThunk,
     FilterValuesType,
     removeTodolistAC,
     TodolistDomainType
@@ -22,7 +22,7 @@ import {
 import {addTaskAC, changeTaskStatusAC, changeTaskTitleAC, removeTaskAC} from './state/tasks-reducer'
 import {useDispatch, useSelector} from 'react-redux'
 import {AppRootStateType} from './state/store'
-import {fetchTodosThunk, TaskStatuses, TaskType} from './api/todolists-api'
+import {TaskStatuses, TaskType} from './api/todolists-api'
 
 export type TasksStateType = {
     [key: string]: Array<TaskType>
