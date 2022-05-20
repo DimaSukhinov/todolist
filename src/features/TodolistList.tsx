@@ -51,12 +51,13 @@ export const TodolistsList = () => {
                                 <Todolist
                                     id={tl.id}
                                     title={tl.title}
+                                    filter={tl.filter}
+                                    isDisabled={tl.isDisabled}
                                     tasks={allTodolistTasks}
                                     removeTask={removeTask}
                                     changeFilter={changeFilter}
                                     addTask={addTask}
                                     changeTaskStatus={changeStatus}
-                                    filter={tl.filter}
                                     removeTodolist={removeTodolist}
                                     changeTaskTitle={changeTaskTitle}
                                     changeTodolistTitle={changeTodolistTitle}

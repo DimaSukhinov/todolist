@@ -3,7 +3,7 @@ import { todolistsReducer } from '../features/todolists-reducer'
 import {applyMiddleware, combineReducers, createStore} from 'redux'
 import {appReducer} from './app-reducer'
 import thunk from 'redux-thunk'
-import {TypedUseSelectorHook, useSelector} from 'react-redux';
+import {TypedUseSelectorHook, useSelector} from 'react-redux'
 
 const rootReducer = combineReducers({
     tasks: tasksReducer,

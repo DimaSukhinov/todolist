@@ -11,10 +11,10 @@ import LinearProgress from '@mui/material/LinearProgress'
 import {TodolistsList} from '../features/TodolistList'
 import {useAppSelector} from './store'
 import {RequestStatusType} from './app-reducer'
+import {ErrorSnackbar} from '../components/ErrorSnackbar'
 
 export const App = () => {
 
-    // const status = useSelector<AppRootStateType, RequestStatusType>(state => state.app.status)
     const status = useAppSelector<RequestStatusType>(state => state.app.status)
 
     return (
@@ -34,6 +34,7 @@ export const App = () => {
             <Container fixed>
                 <TodolistsList/>
             </Container>
+            <ErrorSnackbar/>
         </div>
     )
 }

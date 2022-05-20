@@ -11,14 +11,14 @@ export const EditableSpan = React.memo((props: EditableSpanPropsType) => {
     const [editMode, setEditMode] = useState(false)
     const [title, setTitle] = useState(props.value)
 
-    const activateEditMode = () => {
+    const activateEditMode = useCallback(() => {
         setEditMode(true)
         setTitle(props.value)
-    }
-    const activateViewMode = () => {
+    }, [props])
+    const activateViewMode = useCallback(() => {
         setEditMode(false)
         props.onChange(title)
-    }
+    }, [props, title])
     const onEnterPress = useCallback((e: KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             activateViewMode()
