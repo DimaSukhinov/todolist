@@ -1,27 +1,32 @@
 import React, {useCallback, useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
-import {AppRootStateType} from '../app/store'
+import {AppRootStateType} from '../../app/store'
 import {
-    addTodoTC,
-    changeTodolistFilterAC, changeTodolistTitleTC,
-    deleteTodoTC,
-    fetchTodosTC,
-    FilterValuesType,
-    TodolistDomainType
-} from './todolists-reducer'
-import {addTaskTC, changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC, TasksStateType} from './tasks-reducer'
-import {TaskStatuses} from '../api/todolists-api'
+    addTodoTC, changeTodolistFilterAC, changeTodolistTitleTC,
+    deleteTodoTC, fetchTodosTC, FilterValuesType, TodolistDomainType
+} from '../todolists-reducer'
+import {addTaskTC, changeTaskStatusTC, changeTaskTitleTC, deleteTaskTC, TasksStateType} from '../tasks-reducer'
+import {TaskStatuses} from '../../api/todolists-api'
 import Grid from '@mui/material/Grid'
-import {AddItemForm} from '../components/AddItemForm'
+import {AddItemForm} from '../../components/AddItemForm'
 import Paper from '@mui/material/Paper'
 import {Todolist} from './todolist/Todolist'
+import {useNavigate} from 'react-router-dom'
 
 export const TodolistsList = () => {
 
     const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const isLoggedIn = useSelector<AppRootStateType, boolean>(state => state.auth.isLoggedIn)
+
     useEffect(() => {
-        dispatch(fetchTodosTC())
-    }, [dispatch])
+        if (isLoggedIn) {
+            dispatch(fetchTodosTC())
+        } else {
+            navigate('login')
+        }
+    }, [isLoggedIn])
     
     const todolists = useSelector<AppRootStateType, Array<TodolistDomainType>>(state => state.todolists)
     const tasks = useSelector<AppRootStateType, TasksStateType>(state => state.tasks)
@@ -32,8 +37,8 @@ export const TodolistsList = () => {
     const changeTaskTitle = useCallback((id: string, newTitle: string, todolistId: string) => dispatch(changeTaskTitleTC(id, todolistId, newTitle)), [dispatch])
 
     const changeFilter = useCallback((value: FilterValuesType, todolistId: string) => dispatch(changeTodolistFilterAC(todolistId, value)), [dispatch])
-    const removeTodolist = useCallback((id: string) => dispatch(deleteTodoTC(id)), [dispatch])
     const changeTodolistTitle = useCallback((id: string, title: string) => dispatch(changeTodolistTitleTC(id, title)), [dispatch])
+    const removeTodolist = useCallback((id: string) => dispatch(deleteTodoTC(id)), [dispatch])
     const addTodolist = useCallback((title: string) => dispatch(addTodoTC(title)), [dispatch])
 
     return (
